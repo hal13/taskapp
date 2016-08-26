@@ -25,6 +25,15 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
   end
   
+  def update
+    @project = Projects.find(params[:id])
+    if @project.update
+      redirect_to projects_path
+    else
+      render 'edit'
+    end
+  end
+  
   private
   
     def project_params
