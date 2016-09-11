@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_action :find_project, only: [:create]
+  before_action :find_project, only: [:create, :destroy]
 
   def create
     @task = @project.tasks.create(task_params)
