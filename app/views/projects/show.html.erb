@@ -2,7 +2,12 @@
 
 <ul>
 	<% @project.tasks.each do |task| %>
-	<li><%= task.title %></li>
+	<li>
+		<%= check_box_tag '', '', task.done, {'data-id' => task.id, 'data-project_id' => task.project_id} %>
+		<%= task.title %>
+		<%= link_to "[Delete]", project_task_path(task.project_id, task.id), method: :delete, data: {
+			confirm: "delete task?"	} %>
+	</li>
 	<% end %>
 	<li>
 		<%= form_for [@project, @project.tasks.build] do |f| %>
@@ -11,3 +16,11 @@
 		<% end %>
 	</li>
 </ul>
+
+<script>
+	$(function() {
+		$("input[type=checkbox]").click(function() {
+			$.post('/projects/'+$(this).data('project_id')+'/tasks/'+$(this).data('id')+'/toggle');
+		});
+	});
+</script>
